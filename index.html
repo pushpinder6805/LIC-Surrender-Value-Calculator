@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIC Surrender Value Calculator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom CSS */
+        #surrenderCalculator {
+            text-align: center;
+            margin: auto;
+            width: 50%;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        #result {
+            text-align: center;
+            margin-top: 20px;
+        }
+        button {
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="text-center mt-4">LIC Surrender Value Calculator</h1>
+    <form id="surrenderCalculator">
+        <div class="form-group row mt-4">
+            <label for="policyTerm" class="col-sm-4 col-form-label">Policy Term (in years):</label>
+            <div class="col-sm-8">
+                <input type="number" id="policyTerm" name="policyTerm" class="form-control" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="sumAssured" class="col-sm-4 col-form-label">Sum Assured (in Rs.):</label>
+            <div class="col-sm-8">
+                <input type="number" id="sumAssured" name="sumAssured" class="form-control" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="annualPremium" class="col-sm-4 col-form-label">Annual Premium (in Rs.):</label>
+            <div class="col-sm-8">
+                <input type="number" id="annualPremium" name="annualPremium" class="form-control" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="bonusRate" class="col-sm-4 col-form-label">Bonus Rate (per Rs. 1000 of sum assured):</label>
+            <div class="col-sm-8">
+                <input type="number" id="bonusRate" name="bonusRate" class="form-control" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="premiumPaid" class="col-sm-4 col-form-label">Number of Premiums Paid:</label>
+            <div class="col-sm-8">
+                <input type="number" id="premiumPaid" name="premiumPaid" class="form-control" required>
+            </div>
+        </div>
+        <div class="form-group text-center mt-4">
+            <button type="button" class="btn btn-primary px-5" onclick="calculateSurrenderValue()">Calculate Surrender Value</button>
+        </div>
+    </form>
+    
+    <div id="result"></div>
+
+    <script>
+        function calculateSurrenderValue() {
+            // Retrieve input values
+            var policyTerm = document.getElementById("policyTerm").value;
+            var sumAssured = document.getElementById("sumAssured").value;
+            var annualPremium = document.getElementById("annualPremium").value;
+            var bonusRate = document.getElementById("bonusRate").value;
+            var premiumPaid = document.getElementById("premiumPaid").value;
+
+            // Calculate surrender value
+            var totalPremiumPaid = annualPremium * premiumPaid;
+            var totalBonus = (bonusRate * sumAssured / 1000) * premiumPaid;
+            var gsvFactor = 0.60; // Guaranteed Surrender Value factor
+            var ssvFactor = 0.186; // Surrender Value factor for bonuses
+
+            var gsv = (totalPremiumPaid * gsvFactor) + (totalBonus * ssvFactor);
+            
+            // Display the result
+            document.getElementById("result").innerHTML = "<p>LIC Guaranteed Surrender Value after " + policyTerm + " years: Rs. " + gsv.toFixed(2) + "</p>";
+        }
+    </script>
+</body>
+</html>
