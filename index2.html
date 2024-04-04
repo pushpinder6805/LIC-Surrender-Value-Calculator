@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIC Surrender Value Calculator</title>
+    <style>
+        /* Add your CSS styling here */
+    </style>
+</head>
+<body>
+    <h1>LIC Surrender Value Calculator</h1>
+    <form id="surrenderCalculator">
+        <label for="policyTerm">Policy Term (in years):</label>
+        <input type="number" id="policyTerm" name="policyTerm" required><br><br>
+        
+        <label for="sumAssured">Sum Assured (in Rs.):</label>
+        <input type="number" id="sumAssured" name="sumAssured" required><br><br>
+        
+        <label for="annualPremium">Annual Premium (in Rs.):</label>
+        <input type="number" id="annualPremium" name="annualPremium" required><br><br>
+        
+        <label for="bonusRate">Bonus Rate (per Rs. 1000 of sum assured):</label>
+        <input type="number" id="bonusRate" name="bonusRate" required><br><br>
+        
+        <label for="premiumPaid">Number of Premiums Paid:</label>
+        <input type="number" id="premiumPaid" name="premiumPaid" required><br><br>
+        
+        <button type="button" onclick="calculateSurrenderValue()">Calculate Surrender Value</button>
+    </form>
+    
+    <div id="result"></div>
+
+    <script>
+        function calculateSurrenderValue() {
+            // Retrieve input values
+            var policyTerm = document.getElementById("policyTerm").value;
+            var sumAssured = document.getElementById("sumAssured").value;
+            var annualPremium = document.getElementById("annualPremium").value;
+            var bonusRate = document.getElementById("bonusRate").value;
+            var premiumPaid = document.getElementById("premiumPaid").value;
+
+            // Calculate surrender value
+            var totalPremiumPaid = annualPremium * premiumPaid;
+            var totalBonus = (bonusRate * sumAssured / 1000) * premiumPaid;
+            var gsvFactor = 0.60; // Guaranteed Surrender Value factor
+            var ssvFactor = 0.186; // Surrender Value factor for bonuses
+
+            var gsv = (totalPremiumPaid * gsvFactor) + (totalBonus * ssvFactor);
+            
+            // Display the result
+            document.getElementById("result").innerHTML = "<p>LIC Guaranteed Surrender Value after " + policyTerm + " years: Rs. " + gsv.toFixed(2) + "</p>";
+        }
+    </script>
+</body>
+</html>
